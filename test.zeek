@@ -1,6 +1,6 @@
 global IPuserTable: table[addr] of set[string] = table();
 
-event http_header_user_agent(c: connection, is_orig: bool, name: string, value: string)
+event http_header(c: connection, is_orig: bool, name: string, value: string)
 {
      if(c$http?$user_agent) {
           local source_address: addr = c$id$orig_h;
