@@ -14,8 +14,6 @@ event http_header_user_agent(c: connection, is_orig: bool, name: string, value: 
      }
 }
 
-
-
 event zeek_done()
 {
      for(source_address in IPuserTable) {
