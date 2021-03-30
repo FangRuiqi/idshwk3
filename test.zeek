@@ -4,9 +4,9 @@ event http_header(c: connection, is_orig: bool, name: string, value: string)
 {
      if(c$http?$user_agent) {
           local source_address: addr = c$id$orig_h;
-          local useragent: string = to_lower(c$http$user_agent);
+          local useragent: string = c$http$user_agent;
           if(source_address in IPuserTable) {
-               add IPuserTable[source_address][useragent];
+               add IPuserTable[source_address][to_lower(useragent)];
           }
           else {
                IPuserTable[source_address] = set(useragent);
