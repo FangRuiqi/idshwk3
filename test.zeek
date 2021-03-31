@@ -2,14 +2,15 @@ global IPuserTable: table[addr] of set[string] = table();
 
 event http_header(c: connection, is_orig: bool, name: string, value: string)
 {
-     if(c$http?$user_agent) {
-          local source_address: addr = c$id$orig_h;
-          local useragent: string = c$http$user_agent;
+     local source_address: addr = c$id$orig_h;
+     if(name=="USER-AGENT") {
           if(source_address in IPuserTable) {
-               add IPuserTable[source_address][to_lower(useragent)];
+               if(to_lower(value) !in IPuserTable[source_address]) {
+                    add IPuserTable[source_address][to_lower(value)];
+               }
           }
-          else {
-               IPuserTable[source_address] = set(useragent);
+           else {
+               IPuserTable[source_address] = set(to_lower(value));
           }
      }
 }
